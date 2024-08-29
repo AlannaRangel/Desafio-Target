@@ -1,0 +1,35 @@
+def count_letter_a(string):
+   
+    # Converte a string para minúsculas e conta a ocorrência da letra 'a'
+    count = string.lower().count('a')
+    
+    # Verifica a existência da letra 'a' e retorna a quantidade encontrada
+    if count > 0:
+        print(f"A letra 'a' aparece {count} vezes na string.")
+    else:
+        print("A letra 'a' não aparece na string.")
+    
+    return count
+
+
+def main():
+    while True:
+        # Solicita ao usuário para inserir a string
+        user_input = input("Informe uma string para verificar a existência da letra 'a' (ou 'sair' para encerrar): ")
+
+        # Verifica se o usuário deseja encerrar
+        if user_input.lower() == 'sair':
+            print("Encerrando o programa. Até logo!")
+            break
+        
+        # Verifica se a entrada contém números
+        if any(char.isdigit() for char in user_input):
+            print("Entrada inválida. Por favor, não use números.")
+            continue
+
+        # Chama a função para contar as ocorrências da letra 'a'
+        count_letter_a(user_input)
+
+
+if __name__ == "__main__":
+    main()

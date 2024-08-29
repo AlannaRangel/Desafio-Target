@@ -1,0 +1,83 @@
+import time
+
+class LightBulb:
+    def __init__(self):
+        self.is_on = False
+        self.has_been_on = False
+
+    def turn_on(self):
+        self.is_on = True
+        self.has_been_on = True
+
+    def turn_off(self):
+        self.is_on = False
+
+def identify_switches():
+    # Criando lâmpadas simuladas
+    bulb1 = LightBulb()
+    bulb2 = LightBulb()
+    bulb3 = LightBulb()
+
+    # Mapeamento de interruptores para lâmpadas
+    switches = {
+        'A': bulb1,
+        'B': bulb2,
+        'C': bulb3
+    }
+
+    # Primeira ação: ligar interruptor A por um tempo e depois desligar
+    switches['A'].turn_on()
+    time.sleep(2)  # Simula o tempo necessário para que a lâmpada A aqueça
+    switches['A'].turn_off()
+
+    # Segunda ação: ligar o interruptor B e deixar ligado
+    switches['B'].turn_on()
+
+    # Simulando a primeira ida à sala das lâmpadas
+    first_check_results = {}
+
+    for key, bulb in switches.items():
+        if bulb.is_on:
+            first_check_results['on'] = key  # Lâmpada acesa
+        elif bulb.has_been_on:
+            first_check_results['warm'] = key  # Lâmpada quente mas apagada
+        else:
+            first_check_results['cold'] = key  # Lâmpada fria e apagada
+
+    print(f"Após a primeira ida à sala das lâmpadas:")
+    print(f"Interruptor A está conectado à lâmpada: {first_check_results['warm']}")
+    print(f"Interruptor B está conectado à lâmpada: {first_check_results['on']}")
+    print(f"Interruptor C está conectado à lâmpada: {first_check_results['cold']}")
+
+    # Segunda ida à sala das lâmpadas
+    # Desligando o interruptor B e ligando o interruptor C
+    switches['B'].turn_off()
+    switches['C'].turn_on()
+
+    # Esperar um tempo para garantir que a lâmpada ligada agora aqueça
+    time.sleep(2)
+
+    # Simulando a segunda ida à sala das lâmpadas
+    second_check_results = {}
+
+    for key, bulb in switches.items():
+        if bulb.is_on:
+            second_check_results['on'] = key  # Lâmpada acesa
+        elif bulb.has_been_on:
+            second_check_results['warm'] = key  # Lâmpada quente mas apagada
+        else:
+            second_check_results['cold'] = key  # Lâmpada fria e apagada
+
+    print(f"\nApós a segunda ida à sala das lâmpadas:")
+    print(f"Interruptor A foi confirmado conectado à lâmpada: {second_check_results['warm']}")
+    print(f"Interruptor B agora está desconectado, e a lâmpada está fria.")
+    print(f"Interruptor C está conectado à lâmpada: {second_check_results['on']}")
+
+# Executando a função
+identify_switches()
+
+# Lógica para função: pensando no fato de que uma lâmpada, quando ligada por algum tempo, 
+# fica quente mesmo depois de ser desligada. Assim, ao ligar e desligar um interruptor, 
+# deixar outro ligado e nunca tocar no terceiro, conseguimos identificar qual interruptor controla 
+# cada lâmpada com base em três sinais diferentes: se a lâmpada está acesa, se está quente mas apagada,
+#  ou se está fria. Dessa forma, podemos descobrir tudo com apenas duas idas à sala das lâmpadas.
